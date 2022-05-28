@@ -1,0 +1,8 @@
+{
+  "name": "notebook",
+  "version": "0.1.0",
+  "description": "Static Markdown Renderer",
+  "repository": "https://github.com/linkdd/notebook",
+  "author": "David Delassus <david.jose.delassus@gmail.com>",
+  "license": "MIT"
+}

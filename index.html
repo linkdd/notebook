@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Notebook</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/styles/default.min.css"
+    />
+
+    <script
+      type="application/javascript"
+      src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.5.1/build/highlight.min.js"
+      defer
+    ></script>
+
+    <script
+      type="application/javascript"
+      src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"
+      defer
+    ></script>
+
+    <script type="application/javascript">
+      window.addEventListener('DOMContentLoaded', () => {
+        let content = new URL(window.location.href).searchParams.get('d')
+
+        if (content !== null) {
+          try {
+            content = decodeURIComponent(escape(window.atob(content)));
+          }
+          catch (err) {
+            console.error(err)
+            content = ''
+          }
+
+          const converter = new showdown.Converter()
+          document.getElementById('document').innerHTML = converter.makeHtml(content)
+          document.getElementById('editor').value = content
+        }
+
+        document.getElementById('save').addEventListener('click', () => {
+          const content = document.getElementById('editor').value
+          const encoded = window.btoa(unescape(encodeURIComponent(content)))
+          const url = new URL(window.location.href)
+          url.searchParams.set('d', encoded)
+          window.location.href = url
+        })
+
+        hljs.highlightAll()
+      })
+    </script>
+
+  </head>
+  <body>
+    <header class="section has-background-primary mb-6">
+      <h1 class="title has-text-white has-text-centered">Notebook</h1>
+      <h2 class="subtitle has-text-white has-text-centered">Write, Share, that's it!</h2>
+    </header>
+
+    <main class="container">
+      <section>
+        <div class="content" id="document"></div>
+      </section>
+
+      <hr />
+
+      <section class="has-text-centered">
+        <p class="has-text-centered">Edit your document:</p>
+
+        <textarea class="textarea my-5 is-family-monospace is-radiusless" id="editor"></textarea>
+
+        <button class="button is-primary is-radiusless" id="save">Save</button>
+      </section>
+    </main>
+  </body>
+</html>
