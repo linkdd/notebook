@@ -27,6 +27,12 @@
       defer
     ></script>
 
+    <script
+      type="application/javascript"
+      src="https://cdn.jsdelivr.net/npm/showdown-table@1.0.1/dist/showdown-table.min.js"
+      defer
+    ></script>
+
     <script type="application/javascript">
       window.addEventListener('DOMContentLoaded', () => {
         let content = new URL(window.location.href).searchParams.get('d')
@@ -40,7 +46,9 @@
             content = ''
           }
 
-          const converter = new showdown.Converter()
+          const converter = new showdown.Converter({
+            extensions: ['table'],
+          })
           document.getElementById('document').innerHTML = converter.makeHtml(content)
           document.getElementById('editor').value = content
         }
